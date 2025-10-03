@@ -10,7 +10,7 @@ const moduleRoutes = [
     route: AuthRouters,
   },
   {
-    path: "/tasks",
+    path: "/task",
     route: TaskRouters,
   },
 ];

@@ -13,6 +13,33 @@ const createUser = catchAsync(async (req, res) => {
   });
 });
 
+const getAllUsers = catchAsync(async (req, res) => {
+  const result = await AuthServices.getAllUsers();
+  sendResponse(res, {
+    message: "Users retrieved successfully",
+    data: result,
+  });
+});
+
+const getSingleUser = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const result = await AuthServices.getSingleUser(id);
+  sendResponse(res, {
+    message: "User retrieved successfully",
+    data: result,
+  });
+});
+
+const updateUserRole = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const { role } = req.body;
+  const result = await AuthServices.updateUserRole(id, role);
+  sendResponse(res, {
+    message: "User role updated successfully",
+    data: result,
+  });
+});
+
 const loginUser = catchAsync(async (req, res) => {
   const result = await AuthServices.loginUser(req.body);
   const { refreshToken } = result;
@@ -65,6 +92,9 @@ const resetPassword = catchAsync(async (req, res) => {
 export const AuthControllers = {
   createUser,
   loginUser,
+  getAllUsers,
+  getSingleUser,
+  updateUserRole,
   refreshToken,
   forgetPassword,
   resetPassword,

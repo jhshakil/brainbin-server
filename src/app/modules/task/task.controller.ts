@@ -10,7 +10,8 @@ const createTask = catchAsync(async (req, res) => {
   });
 });
 const getAllTasks = catchAsync(async (req, res) => {
-  const result = await TaskServices.getAllTasks();
+  const { userId } = req.params;
+  const result = await TaskServices.getAllTasks(userId);
   sendResponse(res, {
     message: "Tasks retrieved successfully",
     data: result,

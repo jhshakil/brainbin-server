@@ -6,8 +6,9 @@ const createTask = async (payload: TTask) => {
   return result;
 };
 
-const getAllTasks = async () => {
-  const result = await Task.find();
+const getAllTasks = async (userId?: string) => {
+  const filter = userId ? { assignedTo: userId } : {};
+  const result = await Task.find(filter);
   return result;
 };
 

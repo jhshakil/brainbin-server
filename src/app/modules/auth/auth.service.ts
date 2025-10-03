@@ -50,6 +50,21 @@ const createUserIntoDB = async (payload: TAuth) => {
   }
 };
 
+const getAllUsers = async () => {
+  const users = await Auth.find();
+  return users;
+};
+
+const getSingleUser = async (id: string) => {
+  const user = await Auth.findById(id);
+  return user;
+};
+
+const updateUserRole = async (id: string, role: string) => {
+  const user = await Auth.findByIdAndUpdate(id, { role }, { new: true });
+  return user;
+};
+
 const loginUser = async (payload: TLoginUser) => {
   const user = await Auth.isUserExist(payload.email);
 
@@ -148,6 +163,9 @@ const resetPassword = async (payload: { email: string; password: string }) => {
 
 export const AuthServices = {
   createUserIntoDB,
+  getAllUsers,
+  getSingleUser,
+  updateUserRole,
   loginUser,
   refreshToken,
   forgetPassword,
