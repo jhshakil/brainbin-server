@@ -62,20 +62,10 @@ const resetPassword = catchAsync(async (req, res) => {
   });
 });
 
-const checkUniqueUserName = catchAsync(async (req, res) => {
-  const result = await AuthServices.checkUniqUserName(req.body);
-
-  sendResponse(res, {
-    message: "User name is unique",
-    data: result,
-  });
-});
-
 export const AuthControllers = {
   createUser,
   loginUser,
   refreshToken,
   forgetPassword,
   resetPassword,
-  checkUniqueUserName,
 };

@@ -8,7 +8,6 @@ const createUserValidationSchema = z.object({
       .string()
       .min(6, "Password can not be less than 6 characters")
       .max(20, "Password can not be more than 20 characters"),
-    role: z.enum(["superAdmin", "admin", "user"]).optional(),
   }),
 });
 

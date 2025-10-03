@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import httpStatus from "http-status";
 import AppError from "../../errors/AppError";
-// import { User } from "../user/user.model";
 import { TAuth, TLoginUser } from "./auth.interface";
 import config from "../../config";
 import { Auth } from "./auth.modal";
@@ -9,15 +8,6 @@ import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import { sendEmail } from "../../utils/emailSender";
 import { createToken, verifyToken } from "./auth.utils";
-
-const checkUniqUserName = async (payload: { userName: string }) => {
-  const user = await Auth.findOne({ username: payload.userName });
-  if (user) {
-    throw new AppError(httpStatus.BAD_REQUEST, "User name already exist");
-  }
-
-  return true;
-};
 
 const createUserIntoDB = async (payload: TAuth) => {
   const session = await mongoose.startSession();
@@ -32,19 +22,6 @@ const createUserIntoDB = async (payload: TAuth) => {
     if (!auth.length) {
       throw new AppError(httpStatus.BAD_REQUEST, "Failed to create user");
     }
-
-    const newUser = {
-      name: payload.name,
-      authId: auth[0]._id,
-      email: payload.email,
-    };
-
-    // create a student (transaction-2)
-    // const user = await User.create([newUser], { session });
-
-    // if (!user.length) {
-    //   throw new AppError(httpStatus.BAD_REQUEST, "Failed to create user");
-    // }
 
     const jwtPayload = {
       email: payload.email,
@@ -175,5 +152,4 @@ export const AuthServices = {
   refreshToken,
   forgetPassword,
   resetPassword,
-  checkUniqUserName,
 };
