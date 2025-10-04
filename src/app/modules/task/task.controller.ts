@@ -40,7 +40,10 @@ const updateTask = catchAsync(async (req, res) => {
 });
 
 const updateTaskStatus = catchAsync(async (req, res) => {
-  const result = await TaskServices.updateTask(req.params.id, req.body.status);
+  const result = await TaskServices.updateTaskStatus(
+    req.params.id,
+    req.body.status
+  );
   sendResponse(res, {
     message: "Task status updated successfully",
     data: result,
