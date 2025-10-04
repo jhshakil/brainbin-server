@@ -68,6 +68,20 @@ const updateUserRole = async (id: string, role: string) => {
   return user;
 };
 
+const updateUserStatus = async (id: string, status: string) => {
+  const user = await Auth.findByIdAndUpdate(id, { status }, { new: true });
+  return user;
+};
+
+const deleteUser = async (id: string) => {
+  const user = await Auth.findByIdAndUpdate(
+    id,
+    { isDeleted: true },
+    { new: true }
+  );
+  return user;
+};
+
 const loginUser = async (payload: TLoginUser) => {
   const user = await Auth.isUserExist(payload.email);
 
@@ -175,6 +189,8 @@ export const AuthServices = {
   getAllUsers,
   getSingleUser,
   updateUserRole,
+  updateUserStatus,
+  deleteUser,
   loginUser,
   refreshToken,
   forgetPassword,

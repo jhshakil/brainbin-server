@@ -6,10 +6,47 @@ const createTask = async (payload: TTask) => {
   return result;
 };
 
-const getAllTasks = async (userId?: string) => {
-  const filter = userId ? { assignedTo: userId } : {};
-  const result = await Task.find(filter);
-  return result;
+const getAllTasks = async (
+  userId?: string,
+  search?: string,
+  status?: string,
+  page: number = 1,
+  per_page: number = 10
+) => {
+  const filter: Record<string, any> = {};
+
+  // filter by user
+  if (userId) {
+    filter.assignTo = userId;
+  }
+
+  // filter by status
+  if (status) {
+    filter.status = status;
+  }
+
+  // search by title (case-insensitive)
+  if (search) {
+    filter.title = { $regex: search, $options: "i" };
+  }
+
+  // pagination
+  const skip = (page - 1) * per_page;
+
+  const [tasks, total] = await Promise.all([
+    Task.find(filter).skip(skip).limit(per_page).sort({ createdAt: -1 }),
+    Task.countDocuments(filter),
+  ]);
+
+  return {
+    data: tasks,
+    meta: {
+      total,
+      page,
+      per_page,
+      totalPages: Math.ceil(total / per_page),
+    },
+  };
 };
 
 const getSingleTask = async (id: string) => {

@@ -40,6 +40,25 @@ const updateUserRole = catchAsync(async (req, res) => {
   });
 });
 
+const updateUserStatus = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const { status } = req.body;
+  const result = await AuthServices.updateUserStatus(id, status);
+  sendResponse(res, {
+    message: "User status updated successfully",
+    data: result,
+  });
+});
+
+const deleteUser = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const result = await AuthServices.deleteUser(id);
+  sendResponse(res, {
+    message: "User delete successfully",
+    data: result,
+  });
+});
+
 const loginUser = catchAsync(async (req, res) => {
   const result = await AuthServices.loginUser(req.body);
   const { refreshToken } = result;
@@ -95,6 +114,8 @@ export const AuthControllers = {
   getAllUsers,
   getSingleUser,
   updateUserRole,
+  updateUserStatus,
+  deleteUser,
   refreshToken,
   forgetPassword,
   resetPassword,

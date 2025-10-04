@@ -23,6 +23,17 @@ router.patch(
   AuthControllers.updateUserRole
 );
 
+router.patch(
+  "/users/:id/status",
+  auth(AUTH_ROLE.admin, AUTH_ROLE.superAdmin),
+  AuthControllers.updateUserStatus
+);
+router.delete(
+  "/users/:id",
+  auth(AUTH_ROLE.admin, AUTH_ROLE.superAdmin),
+  AuthControllers.deleteUser
+);
+
 router.post(
   "/login",
   validateRequest(AuthValidations.loginValidationSchema),

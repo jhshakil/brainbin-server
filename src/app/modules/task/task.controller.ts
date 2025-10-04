@@ -10,8 +10,14 @@ const createTask = catchAsync(async (req, res) => {
   });
 });
 const getAllTasks = catchAsync(async (req, res) => {
-  const { userId } = req.params;
-  const result = await TaskServices.getAllTasks(userId);
+  const { userId, status, search, page, per_page } = req.query;
+  const result = await TaskServices.getAllTasks(
+    userId as string,
+    search as string,
+    status as string,
+    Number(page) || 1,
+    Number(per_page) || 10
+  );
   sendResponse(res, {
     message: "Tasks retrieved successfully",
     data: result,
