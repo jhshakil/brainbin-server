@@ -9,6 +9,7 @@ const taskSchema = new Schema<TTask>({
     enum: ["Pending", "In Progress", "Complete"],
     default: "Pending",
   },
+  dueDate: { type: String, required: true },
   assignTo: { type: Schema.Types.ObjectId, ref: "Auth", required: true },
 });
 

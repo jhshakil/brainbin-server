@@ -6,6 +6,7 @@ const createTaskValidation = z.object({
     details: z.string().min(1, "Details is required"),
     assignTo: z.string(),
     status: z.enum(["Pending", "In Progress", "Complete"]).optional(),
+    dueDate: z.string().min(1, "Due date is required"),
   }),
 });
 const updateTaskValidation = z.object({
@@ -14,6 +15,7 @@ const updateTaskValidation = z.object({
     details: z.string().min(1, "Details is required").optional(),
     assignTo: z.string().optional(),
     status: z.enum(["Pending", "In Progress", "Complete"]).optional(),
+    dueData: z.string().min(1, "Due date is required").optional(),
   }),
 });
 

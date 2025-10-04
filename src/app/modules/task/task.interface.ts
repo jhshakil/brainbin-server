@@ -6,4 +6,5 @@ export type TTask = {
   details: string;
   status: "Pending" | "In Progress" | "Complete";
   assignTo: Types.ObjectId;
+  dueDate: string;
 };
