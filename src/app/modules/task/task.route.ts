@@ -27,9 +27,16 @@ router.get(
 );
 router.patch(
   "/:id",
-  auth(AUTH_ROLE.user, AUTH_ROLE.admin, AUTH_ROLE.superAdmin),
+  auth(AUTH_ROLE.admin, AUTH_ROLE.superAdmin),
   validateRequest(TaskValidations.updateTaskValidation),
   TaskControllers.updateTask
+);
+
+router.patch(
+  "/:id/status",
+  auth(AUTH_ROLE.user, AUTH_ROLE.admin, AUTH_ROLE.superAdmin),
+  validateRequest(TaskValidations.updateTaskStatus),
+  TaskControllers.updateTaskStatus
 );
 router.delete(
   "/:id",

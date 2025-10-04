@@ -38,6 +38,14 @@ const updateTask = catchAsync(async (req, res) => {
     data: result,
   });
 });
+
+const updateTaskStatus = catchAsync(async (req, res) => {
+  const result = await TaskServices.updateTask(req.params.id, req.body.status);
+  sendResponse(res, {
+    message: "Task status updated successfully",
+    data: result,
+  });
+});
 const deleteTask = catchAsync(async (req, res) => {
   const result = await TaskServices.deleteTask(req.params.id);
   sendResponse(res, {
@@ -51,5 +59,6 @@ export const TaskControllers = {
   getAllTasks,
   getSingleTask,
   updateTask,
+  updateTaskStatus,
   deleteTask,
 };

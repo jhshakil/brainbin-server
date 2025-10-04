@@ -58,6 +58,10 @@ const updateTask = async (id: string, payload: Partial<TTask>) => {
   const result = await Task.findByIdAndUpdate(id, payload, { new: true });
   return result;
 };
+const updateTaskStatus = async (id: string, status: string) => {
+  const result = await Task.findByIdAndUpdate(id, { status }, { new: true });
+  return result;
+};
 
 const deleteTask = async (id: string) => {
   const result = await Task.findByIdAndDelete(id);
@@ -69,5 +73,6 @@ export const TaskServices = {
   getAllTasks,
   getSingleTask,
   updateTask,
+  updateTaskStatus,
   deleteTask,
 };

@@ -17,7 +17,14 @@ const updateTaskValidation = z.object({
   }),
 });
 
+const updateTaskStatus = z.object({
+  body: z.object({
+    status: z.enum(["Pending", "In Progress", "Complete"]),
+  }),
+});
+
 export const TaskValidations = {
   createTaskValidation,
   updateTaskValidation,
+  updateTaskStatus,
 };
