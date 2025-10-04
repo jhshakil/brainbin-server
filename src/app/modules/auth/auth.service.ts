@@ -54,7 +54,7 @@ const createUserIntoDB = async (payload: TAuth) => {
 };
 
 const getAllUsers = async () => {
-  const users = await Auth.find();
+  const users = await Auth.find({ role: { $ne: "superAdmin" } });
   return users;
 };
 
