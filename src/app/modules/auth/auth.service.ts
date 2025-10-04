@@ -8,6 +8,7 @@ import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import { sendEmail } from "../../utils/emailSender";
 import { createToken, verifyToken } from "./auth.utils";
+import { id } from "zod/v4/locales";
 
 const createUserIntoDB = async (payload: TAuth) => {
   const session = await mongoose.startSession();
@@ -24,7 +25,9 @@ const createUserIntoDB = async (payload: TAuth) => {
     }
 
     const jwtPayload = {
+      id: auth[0]._id,
       email: payload.email,
+      name: auth[0].name,
       role: auth[0].role,
     };
     const accessToken = createToken(
@@ -42,7 +45,7 @@ const createUserIntoDB = async (payload: TAuth) => {
     await session.commitTransaction();
     await session.endSession();
 
-    return { accessToken, refreshToken };
+    return { accessToken, refreshToken, user: auth[0] };
   } catch (err: any) {
     await session.abortTransaction();
     await session.endSession();
@@ -76,7 +79,9 @@ const loginUser = async (payload: TLoginUser) => {
 
   // create token and send to the client
   const jwtPayload = {
+    id: user._id,
     email: user.email,
+    name: user.name,
     role: user.role,
   };
   const accessToken = createToken(
@@ -91,7 +96,7 @@ const loginUser = async (payload: TLoginUser) => {
     config.jwt_refresh_expires_in as string
   );
 
-  return { accessToken, refreshToken };
+  return { accessToken, refreshToken, user };
 };
 
 const refreshToken = async (token: string) => {
@@ -108,7 +113,9 @@ const refreshToken = async (token: string) => {
   }
 
   const jwtPayload = {
+    id: user._id,
     email: user.email,
+    name: user.name,
     role: user.role,
   };
 
@@ -130,7 +137,9 @@ const forgetPassword = async (payload: { email: string }) => {
   }
 
   const jwtPayload = {
+    id: user._id,
     email: user.email,
+    name: user.name,
     role: user.role,
   };
   const accessToken = createToken(
